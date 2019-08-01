@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<canvas width="200" height="30" id="myCanvas"></canvas>
+	<br>
+	<input type="text" name="" placeholder="请输入验证码" id="input">
+	<button onclick="check()">验证</button>
+</body>
+<script type="text/javascript">
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+	ctx.fillStyle="#BFEFFF";//绘制背景颜色
+	ctx.fillRect(0,0,160,30);
+	//随机产生4个字符
+	var chars = [];
+	for(var i = 0;i < 4;i++){
+		chars.push(Math.floor(Math.random()*9).toString());
+	}
+	ctx.font="20px Verdana";
+	var x = 15;
+	var colors = ['red','yellow','blue','green','pink','black'];
+	//绘制4个字符
+	for(i = 0;i < 4;i++){
+		ctx.fillStyle = colors[Math.floor(Math.random()*5)];
+		ctx.fillText(chars[i],x,25);
+		x = x + 40;
+	}
+	//对图案随机加入线条造成干扰
+	var lineNumber = 5; // 线条条数
+	var lineX = 160;
+	var lineY = 30;  // 最大线条坐标
+	for(i = 0;i < lineNumber;i++){
+		ctx.strokeStyle = colors[Math.floor(Math.random()*5)];
+		ctx.beginPath();
+		ctx.moveTo(Math.floor(Math.random()*lineX),Math.floor(Math.random()*lineY));
+		ctx.lineTo(Math.floor(Math.random()*lineX),Math.floor(Math.random()*lineY));
+		ctx.stroke();
+	}
+    // 点击按钮验证
+	function check(){
+		var input = document.getElementById('input').value;
+		if(input === chars.join('')){
+			alert("验证成功");
+		}
+		else{
+			alert('验证失败');
+		}
+	}
+</script>
+</html>
